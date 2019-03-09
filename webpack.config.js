@@ -37,7 +37,7 @@ const alias = {
 
 module.exports = {
     mode,
-    entry: [path.join(__dirname, '/src/index.js')],
+    entry: ['babel-polyfill', path.join(__dirname, '/src/index.js')],
     output: {
         path: path.join(__dirname, 'build'),
         filename: '[name].[hash].js',
@@ -68,7 +68,6 @@ module.exports = {
                 use: {
                     loader: 'file-loader',
                     options: {
-                        name: '[path][name].[hash].[ext]',
                         context: rootAssetPath,
                     },
                 },

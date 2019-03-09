@@ -1,10 +1,7 @@
 import jsx from 'custom-elements-jsx'
 
 import './store'
-
-import './styles'
-
-const app = <h3>Hello, world</h3>
+import app from 'ui'
 
 const root = document.getElementById('root')
 
