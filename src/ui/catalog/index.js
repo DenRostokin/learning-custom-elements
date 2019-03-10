@@ -16,7 +16,7 @@ class MainCatalog extends Component {
     }
 
     render() {
-        return <h3>Catalog</h3>
+        return <div>Catalog</div>
     }
 }
 

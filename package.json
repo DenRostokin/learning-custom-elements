@@ -47,6 +47,7 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "bootstrap": "^4.3.1",
     "custom-elements-jsx": "^1.1.1",
     "custom-elements-router": "^1.1.0",
     "lodash": "^4.17.11",
