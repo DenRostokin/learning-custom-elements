@@ -34,6 +34,11 @@ export const fetchPhones = () => (dispatch, getState) => {
 
             return newPhones
         },
+        handleError: error => {
+            console.log(error)
+
+            return error
+        },
     }
 
     dispatch(fetchData(config))

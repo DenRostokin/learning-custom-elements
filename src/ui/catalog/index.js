@@ -25,22 +25,22 @@ class MainCatalog extends Component {
 
     renderPhone = (phone, index) => {
         const { context } = this.props
-        const shortDescription = phone.description.slice(0, 60)
+        const shortDescription = `${phone.description.slice(0, 60)}...`
 
         return (
             <div
                 key={`phone-${index}`}
-                className="col-sm-4 col-lg-4 col-md-4 book-list"
+                className="col-sm-4 col-lg-4 col-md-4 book-list mt-3"
             >
-                <div className="thumbnail">
+                <div className="card">
                     <img
-                        className="img-thumbnail"
+                        className="card-img-top img-thumbnail"
                         src={phone.image}
                         alt={phone.name}
                     />
-                    <div className="caption">
-                        <h4 className="pull-right">${phone.price}</h4>
-                        <h4>
+                    <div className="card-body">
+                        <h4 className="float-right">${phone.price}</h4>
+                        <h4 className="card-title">
                             <custom-link
                                 context={context}
                                 to={routes.product(phone.id)}
@@ -48,7 +48,19 @@ class MainCatalog extends Component {
                                 {phone.name}
                             </custom-link>
                         </h4>
-                        <p>{shortDescription}</p>
+                        <p className="card-text">{shortDescription}</p>
+                        <p className="itemButton">
+                            <button className="btn btn-primary mr-2">
+                                Buy now!
+                            </button>
+                            <custom-link
+                                context={context}
+                                to={routes.product(phone.id)}
+                                className="btn btn-secondary"
+                            >
+                                More info
+                            </custom-link>
+                        </p>
                     </div>
                 </div>
             </div>

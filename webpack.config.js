@@ -3,6 +3,7 @@ const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
+const CopyPlugin = require('copy-webpack-plugin')
 
 const is_dev = process.env.NODE_ENV === 'development'
 
@@ -19,6 +20,12 @@ const plugins = [
         filename: '[name].[hash].css',
     }),
     new CleanWebpackPlugin(),
+    new CopyPlugin([
+        {
+            from: path.resolve(__dirname, 'assets/uploads'),
+            to: path.resolve(__dirname, 'build/uploads'),
+        },
+    ]),
 ]
 
 const jsLoader = {
@@ -43,9 +50,9 @@ module.exports = {
         filename: '[name].[hash].js',
     },
     resolve: {
+        alias,
         modules: [path.join(__dirname, 'src'), 'node_modules'],
         extensions,
-        alias,
     },
     module: {
         rules: [
