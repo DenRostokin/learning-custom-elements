@@ -20,11 +20,13 @@ class MainCatalog extends Component {
     componentDidMount() {
         bindedActions.actions.fetchPhones()
 
-        store.subscribe(this.update)
+        this.unsubscribe = store.subscribe(this.update)
     }
 
     componentWillUnmount() {
         bindedActions.actions.clearPhones()
+
+        this.unsubscribe()
     }
 
     renderPhone = (phone, index) => {
@@ -36,15 +38,15 @@ class MainCatalog extends Component {
                 key={`phone-${index}`}
                 className="col-sm-4 col-lg-4 col-md-4 book-list mt-3"
             >
-                <div className="card">
+                <div className="thumbnail">
                     <img
-                        className="card-img-top img-thumbnail"
+                        className="img-thumbnail"
                         src={phone.image}
                         alt={phone.name}
                     />
-                    <div className="card-body">
-                        <h4 className="float-right">${phone.price}</h4>
-                        <h4 className="card-title">
+                    <div className="caption">
+                        <h4 className="pull-right">${phone.price}</h4>
+                        <h4>
                             <custom-link
                                 context={context}
                                 to={routes.product(phone.id)}
@@ -52,15 +54,15 @@ class MainCatalog extends Component {
                                 {phone.name}
                             </custom-link>
                         </h4>
-                        <p className="card-text">{shortDescription}</p>
+                        <p>{shortDescription}</p>
                         <p className="itemButton">
-                            <button className="btn btn-primary mr-2">
+                            <button className="btn btn-primary">
                                 Buy now!
                             </button>
                             <custom-link
                                 context={context}
                                 to={routes.product(phone.id)}
-                                className="btn btn-secondary"
+                                className="btn btn-default"
                             >
                                 More info
                             </custom-link>
@@ -84,7 +86,7 @@ class MainCatalog extends Component {
                     <div className="col-md-12">
                         <button
                             onClick={fetchPhones}
-                            className="float-right btn btn-primary"
+                            className="pull-right btn btn-primary"
                         >
                             Load more
                         </button>

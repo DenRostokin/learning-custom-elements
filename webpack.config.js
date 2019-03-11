@@ -48,6 +48,7 @@ module.exports = {
     output: {
         path: path.join(__dirname, 'build'),
         filename: '[name].[hash].js',
+        publicPath: '/',
     },
     resolve: {
         alias,
@@ -71,7 +72,7 @@ module.exports = {
             },
             {
                 //eslint-disable-next-line
-                test: /\.(wav|webm|mp3|woff|woff2|ttf|eot|png|jpe?g|gif|ico)(\?.*)?$/i,
+                test: /\.(wav|webm|mp3|woff|woff2|ttf|eot|svg|png|jpe?g|gif|ico)(\?.*)?$/i,
                 use: {
                     loader: 'file-loader',
                     options: {
