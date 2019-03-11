@@ -2,7 +2,7 @@ import { createAction } from 'redux-actions'
 
 import * as api from 'api/catalog'
 import * as CONST from './const'
-import { getInitialPhones } from './selectors'
+import { getInitialPhones, getPhonesPageIds } from './selectors'
 import { fetchData } from 'ducks/shared/fetch'
 
 const getNewPhones = (data, state) => {
@@ -22,10 +22,11 @@ const getNewPhones = (data, state) => {
 }
 
 export const fetchPhones = () => (dispatch, getState) => {
+    const offset = getPhonesPageIds(getState()).length
     const action = createAction(CONST.PHONES_PAGE)
     const config = {
         name: CONST.PHONES_INSTANCE,
-        apiMethod: api.fetchPhones,
+        apiMethod: api.fetchPhones.bind(null, { offset }),
         handleSuccess: data => {
             const newPhones = getNewPhones(data, getState())
             const newPhonesIds = Object.keys(newPhones)
@@ -33,11 +34,6 @@ export const fetchPhones = () => (dispatch, getState) => {
             dispatch(action(newPhonesIds))
 
             return newPhones
-        },
-        handleError: error => {
-            console.log(error)
-
-            return error
         },
     }
 

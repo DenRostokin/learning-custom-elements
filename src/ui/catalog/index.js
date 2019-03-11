@@ -69,10 +69,23 @@ class MainCatalog extends Component {
 
     render() {
         const { phones } = mapState(store.getState())
+        const {
+            actions: { fetchPhones },
+        } = bindedActions
 
         return (
             <div>
                 <div className="books row">{phones.map(this.renderPhone)}</div>
+                <div className="row">
+                    <div className="col-md-12">
+                        <button
+                            onClick={fetchPhones}
+                            className="float-right btn btn-primary"
+                        >
+                            Load more
+                        </button>
+                    </div>
+                </div>
             </div>
         )
     }
