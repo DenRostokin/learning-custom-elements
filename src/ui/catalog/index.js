@@ -23,6 +23,10 @@ class MainCatalog extends Component {
         store.subscribe(this.update)
     }
 
+    componentWillUnmount() {
+        bindedActions.actions.clearPhones()
+    }
+
     renderPhone = (phone, index) => {
         const { context } = this.props
         const shortDescription = `${phone.description.slice(0, 60)}...`
@@ -74,7 +78,7 @@ class MainCatalog extends Component {
         } = bindedActions
 
         return (
-            <div>
+            <main-layout>
                 <div className="books row">{phones.map(this.renderPhone)}</div>
                 <div className="row">
                     <div className="col-md-12">
@@ -86,7 +90,7 @@ class MainCatalog extends Component {
                         </button>
                     </div>
                 </div>
-            </div>
+            </main-layout>
         )
     }
 }

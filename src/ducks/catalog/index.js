@@ -6,7 +6,11 @@ import { getFetchReducer } from 'ducks/shared/fetch'
 
 const phonesPageReducer = handleAction(
     CONST.PHONES_PAGE,
-    (state, { payload }) => ({ ...state, ids: [...state.ids, ...payload] }),
+    (state, { payload }) => {
+        if (payload) return { ...state, ids: [...state.ids, ...payload] }
+
+        return { ...state, ids: [] }
+    },
     { ids: [] }
 )
 

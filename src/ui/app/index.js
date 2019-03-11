@@ -5,12 +5,11 @@ import history from 'utils/history'
 
 const app = (
     <custom-router history={history}>
-        <main-layout>
-            <custom-switch>
-                <custom-route path="/" exact component="main-catalog" />
-                <custom-redirect from="/*" to="/" />
-            </custom-switch>
-        </main-layout>
+        <custom-switch>
+            <custom-route path="/" exact component="main-catalog" />
+            <custom-route path="/product/:id" component="main-product" />
+            <custom-redirect from="/*" to="/" />
+        </custom-switch>
     </custom-router>
 )
 
