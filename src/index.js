@@ -1,6 +1,9 @@
 import jsx from 'custom-elements-jsx'
 
-const app = <h3>Hello, world</h3>
+import './store'
+import app from 'ui'
+
+import 'bootstrap/dist/css/bootstrap.min.css'
 
 const root = document.getElementById('root')
 

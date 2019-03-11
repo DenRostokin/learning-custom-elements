@@ -3,6 +3,7 @@ const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
+const CopyPlugin = require('copy-webpack-plugin')
 
 const is_dev = process.env.NODE_ENV === 'development'
 
@@ -19,6 +20,12 @@ const plugins = [
         filename: '[name].[hash].css',
     }),
     new CleanWebpackPlugin(),
+    new CopyPlugin([
+        {
+            from: path.resolve(__dirname, 'assets/uploads'),
+            to: path.resolve(__dirname, 'build/uploads'),
+        },
+    ]),
 ]
 
 const jsLoader = {
@@ -37,15 +44,16 @@ const alias = {
 
 module.exports = {
     mode,
-    entry: [path.join(__dirname, '/src/index.js')],
+    entry: ['babel-polyfill', path.join(__dirname, '/src/index.js')],
     output: {
         path: path.join(__dirname, 'build'),
         filename: '[name].[hash].js',
+        publicPath: '/',
     },
     resolve: {
+        alias,
         modules: [path.join(__dirname, 'src'), 'node_modules'],
         extensions,
-        alias,
     },
     module: {
         rules: [
@@ -64,11 +72,10 @@ module.exports = {
             },
             {
                 //eslint-disable-next-line
-                test: /\.(wav|webm|mp3|woff|woff2|ttf|eot|png|jpe?g|gif|ico)(\?.*)?$/i,
+                test: /\.(wav|webm|mp3|woff|woff2|ttf|eot|svg|png|jpe?g|gif|ico)(\?.*)?$/i,
                 use: {
                     loader: 'file-loader',
                     options: {
-                        name: '[path][name].[hash].[ext]',
                         context: rootAssetPath,
                     },
                 },
