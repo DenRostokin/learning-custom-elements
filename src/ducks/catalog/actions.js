@@ -47,3 +47,10 @@ export const clearPhones = () => dispatch => {
     dispatch(actions.clear())
     dispatch(phonesPageAction())
 }
+
+export const addPhoneToBasket = phoneId => dispatch => {
+    console.log('hi')
+    const action = createAction(CONST.BASKET)
+
+    dispatch(action(phoneId))
+}

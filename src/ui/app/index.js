@@ -6,9 +6,9 @@ import history from 'utils/history'
 const app = (
     <custom-router history={history}>
         <custom-switch>
-            <custom-route path="/" exact component="main-catalog" />
+            <custom-route path="/" exact component="main-catalog-container" />
             <custom-route path="/product/:id" component="main-product" />
-            <custom-redirect from="/*" to="/" />
+            <custom-redirect from="*" to="/" />
         </custom-switch>
     </custom-router>
 )
