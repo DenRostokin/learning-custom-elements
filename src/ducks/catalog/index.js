@@ -22,8 +22,17 @@ const basketReducer = handleAction(
     []
 )
 
+const searchReducer = handleAction(
+    CONST.SEARCH_PHONE,
+    (state, { payload = '' }) => {
+        return payload
+    },
+    ''
+)
+
 export default combineReducers({
     phones: getFetchReducer(CONST.PHONES_INSTANCE),
     phonesPage: phonesPageReducer,
     basket: basketReducer,
+    search: searchReducer,
 })

@@ -8,4 +8,5 @@ const getPayload = (state, instanceName) => {
     return form[instanceName].payload
 }
 
-export const getPhone = state => getPayload(state, 'phone') || {}
+export const getPhone = state =>
+    getPayload(state, 'phone') || { hello: 'world' }

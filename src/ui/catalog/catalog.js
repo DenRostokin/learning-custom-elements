@@ -1,37 +1,12 @@
 import jsx, { Component } from 'custom-elements-jsx'
-import { bindActionCreators } from 'redux'
 
-import store from 'store'
-import * as actions from 'ducks/catalog/actions'
-import * as selectors from 'ducks/catalog/selectors'
 import * as routes from 'utils/routes'
 
-const { dispatch } = store
-
-const mapState = state => ({
-    phones: selectors.getPhones(state),
-})
-
-const bindedActions = {
-    actions: bindActionCreators(actions, dispatch),
-}
-
 class MainCatalog extends Component {
-    componentDidMount() {
-        bindedActions.actions.fetchPhones()
-
-        this.unsubscribe = store.subscribe(this.update)
-    }
-
-    componentWillUnmount() {
-        bindedActions.actions.clearPhones()
-
-        this.unsubscribe()
-    }
-
-    renderPhone = (phone, index) => {
-        const { context } = this.props
-        const shortDescription = `${phone.description.slice(0, 60)}...`
+    renderPhone = (phone = {}, index) => {
+        const { context, addPhoneToBasket } = this.props
+        const shortDescription =
+            phone.description && `${phone.description.slice(0, 60)}...`
 
         return (
             <div
@@ -58,11 +33,7 @@ class MainCatalog extends Component {
                         <p className="itemButton">
                             <button
                                 className="btn btn-primary"
-                                onClick={() =>
-                                    bindedActions.actions.addPhoneToBasket(
-                                        phone.id
-                                    )
-                                }
+                                onClick={() => addPhoneToBasket(phone.id)}
                             >
                                 Buy now!
                             </button>
@@ -81,14 +52,17 @@ class MainCatalog extends Component {
     }
 
     render() {
-        const { phones } = mapState(store.getState())
-        const {
-            actions: { fetchPhones },
-        } = bindedActions
+        const { phones, fetchPhones } = this.props
 
         return (
             <custom-fragment>
-                <div className="books row">{phones.map(this.renderPhone)}</div>
+                <div className="books row">
+                    {phones.length ? (
+                        phones.map(this.renderPhone)
+                    ) : (
+                        <h3>There aren't phones on the page</h3>
+                    )}
+                </div>
                 <div className="row">
                     <div className="col-md-12">
                         <button
