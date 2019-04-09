@@ -4,7 +4,8 @@ import { bindActionCreators } from 'redux'
 import store from 'store'
 import * as actions from 'ducks/catalog/actions'
 import * as selectors from 'ducks/catalog/selectors'
-import * as routes from 'utils/routes'
+
+import './catalog'
 
 const { dispatch } = store
 
@@ -13,89 +14,38 @@ const mapState = state => ({
 })
 
 const bindedActions = {
-    actions: bindActionCreators(actions, dispatch),
+    ...bindActionCreators(actions, dispatch),
 }
 
-class MainCatalog extends Component {
+class MainCatalogContainer extends Component {
     componentDidMount() {
-        bindedActions.actions.fetchPhones()
+        const { phones } = mapState(store.getState())
+
+        if (!phones.length) bindedActions.fetchPhones()
 
         this.unsubscribe = store.subscribe(this.update)
     }
 
     componentWillUnmount() {
-        bindedActions.actions.clearPhones()
-
         this.unsubscribe()
-    }
-
-    renderPhone = (phone, index) => {
-        const { context } = this.props
-        const shortDescription = `${phone.description.slice(0, 60)}...`
-
-        return (
-            <div
-                key={`phone-${index}`}
-                className="col-sm-4 col-lg-4 col-md-4 book-list mt-3"
-            >
-                <div className="thumbnail">
-                    <img
-                        className="img-thumbnail"
-                        src={phone.image}
-                        alt={phone.name}
-                    />
-                    <div className="caption">
-                        <h4 className="pull-right">${phone.price}</h4>
-                        <h4>
-                            <custom-link
-                                context={context}
-                                to={routes.product(phone.id)}
-                            >
-                                {phone.name}
-                            </custom-link>
-                        </h4>
-                        <p>{shortDescription}</p>
-                        <p className="itemButton">
-                            <button className="btn btn-primary">
-                                Buy now!
-                            </button>
-                            <custom-link
-                                context={context}
-                                to={routes.product(phone.id)}
-                                className="btn btn-default"
-                            >
-                                More info
-                            </custom-link>
-                        </p>
-                    </div>
-                </div>
-            </div>
-        )
     }
 
     render() {
         const { phones } = mapState(store.getState())
-        const {
-            actions: { fetchPhones },
-        } = bindedActions
+        const { context } = this.props
 
         return (
-            <main-layout>
-                <div className="books row">{phones.map(this.renderPhone)}</div>
-                <div className="row">
-                    <div className="col-md-12">
-                        <button
-                            onClick={fetchPhones}
-                            className="pull-right btn btn-primary"
-                        >
-                            Load more
-                        </button>
-                    </div>
-                </div>
+            <main-layout context={context}>
+                <main-catalog
+                    phones={phones}
+                    fetchPhones={bindedActions.fetchPhones}
+                    addPhoneToBasket={bindedActions.addPhoneToBasket}
+                    {...this.props}
+                />
             </main-layout>
         )
     }
 }
 
-if (!window.customElements.get('main-catalog'))
-    window.customElements.define('main-catalog', MainCatalog)
+if (!window.customElements.get('main-catalog-container'))
+    window.customElements.define('main-catalog-container', MainCatalogContainer)

@@ -2,14 +2,24 @@ import jsx, { Component } from 'custom-elements-jsx'
 
 class MainLayout extends Component {
     render() {
-        const { children } = this.props
+        const { children, context } = this.props
 
         return (
             <div className="view-container">
                 <div className="container">
                     <div className="row">
-                        <div className="col-md-3">Sidebar</div>
-                        <div className="col-md-9">{children}</div>
+                        <div
+                            style={{ paddingTop: '20px' }}
+                            className="col-md-3"
+                        >
+                            <main-sidebar context={context} />
+                        </div>
+                        <div
+                            style={{ paddingTop: '20px' }}
+                            className="col-md-9"
+                        >
+                            {children}
+                        </div>
                     </div>
                 </div>
             </div>

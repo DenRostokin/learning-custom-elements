@@ -30,7 +30,7 @@ export const fetchPhones = () => (dispatch, getState) => {
         apiMethod: api.fetchPhones.bind(null, { offset }),
         handleSuccess: data => {
             const newPhones = getNewPhones(data, getState())
-            const newPhonesIds = Object.keys(newPhones)
+            const newPhonesIds = data.map(item => item.id)
 
             dispatch(phonesPageAction(newPhonesIds))
 
@@ -38,7 +38,7 @@ export const fetchPhones = () => (dispatch, getState) => {
         },
     }
 
-    dispatch(fetchData(config))
+    return dispatch(fetchData(config))
 }
 
 export const clearPhones = () => dispatch => {
@@ -47,3 +47,11 @@ export const clearPhones = () => dispatch => {
     dispatch(actions.clear())
     dispatch(phonesPageAction())
 }
+
+export const addPhoneToBasket = phoneId => dispatch => {
+    const action = createAction(CONST.BASKET)
+
+    dispatch(action(phoneId))
+}
+
+export const searchPhone = createAction(CONST.SEARCH_PHONE)
