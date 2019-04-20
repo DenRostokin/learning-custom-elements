@@ -1,5 +1,3 @@
-import 'custom-elements-jsx/lib/elements'
-
 import './store'
 import app from 'ui'
 
