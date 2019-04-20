@@ -5,7 +5,8 @@
   "main": "src/index.js",
   "scripts": {
     "start": "export NODE_ENV='development' && webpack-dev-server --debug --hot --devtool eval-source-map --output-pathinfo --watch --colors --inline --port 3000 --host 0.0.0.0",
-    "build": "export NODE_ENV='production' && webpack -p"
+    "build": "export NODE_ENV='production' && webpack -p",
+    "serve": "serve -d ./build -l 3000"
   },
   "keywords": [
     "custom",
@@ -41,6 +42,7 @@
     "mini-css-extract-plugin": "^0.5.0",
     "postcss-loader": "^3.0.0",
     "prettier-eslint": "^8.8.2",
+    "serve": "^11.0.0",
     "style-loader": "^0.23.1",
     "webpack": "^4.29.6",
     "webpack-cli": "^3.2.3",
@@ -50,8 +52,8 @@
     "@fortawesome/fontawesome-free": "^5.8.1",
     "axios": "^0.18.0",
     "bootstrap": "3",
-    "custom-elements-jsx": "^2.0.0",
-    "custom-elements-router": "^1.1.1",
+    "custom-elements-jsx": "^2.0.1",
+    "custom-elements-router": "^1.1.2",
     "lodash": "^4.17.11",
     "redux": "^4.0.1",
     "redux-actions": "^2.6.5",
